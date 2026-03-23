@@ -221,6 +221,11 @@ function createDOM(r, c, piece, isFallingFromAbove) {
     tile.addEventListener("drop", dragDrop);
     tile.addEventListener("dragend", dragEnd);
 
+    // Touch events for mobile
+    tile.addEventListener("touchstart", touchStart, {passive: false});
+    tile.addEventListener("touchmove", touchMove, {passive: false});
+    tile.addEventListener("touchend", touchEnd);
+
     return tile;
 }
 
@@ -241,7 +246,38 @@ function dragStart() {
 function dragOver(e) { e.preventDefault(); }
 function dragEnter(e) { e.preventDefault(); }
 function dragLeave() {}
-function dragDrop() { if(!isProcessing && !gameEnded) otherTile = this; }
+function dragDrop() { otherTile = this; }
+
+// Touch handlers for mobile
+let touchTarget = null;
+function touchStart(e) {
+    if (e.touches.length > 1) return;
+    if(!isProcessing && !gameEnded) {
+        currTile = this; 
+        if(!gameStarted) {
+            gameStarted = true;
+            startGame();
+        }
+    }
+}
+function touchMove(e) {
+    if (e.touches.length > 1) return;
+    e.preventDefault(); // Prevents page scrolling while swiping
+    let obj = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+    if (obj && obj.classList.contains("tile") && obj !== currTile) {
+        touchTarget = obj;
+    }
+}
+function touchEnd(e) {
+    if (touchTarget && currTile) {
+        otherTile = touchTarget;
+        dragEnd();
+    } else {
+        currTile = null;
+        otherTile = null;
+    }
+    touchTarget = null;
+}
 
 function dragEnd() {
     if (isProcessing || gameEnded) {

@@ -340,3 +340,37 @@ h2 {
     color: #64748b;
     cursor: not-allowed;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 500px) {
+    h1 {
+        font-size: 2.2rem;
+        margin-bottom: 5px;
+    }
+    #stats {
+        width: 100%;
+        max-width: 380px;
+        padding: 0 10px;
+    }
+    .stat-box { font-size: 1.1rem; padding: 6px 12px; border-width: 2px; }
+    
+    #board {
+        transform: scale(0.78);
+        transform-origin: top center;
+        margin-bottom: -104px; /* Collapse whitespace created by CSS scaling */
+    }
+
+    #nav-bar { padding: 8px 15px; margin-top: 5px; gap: 8px; }
+    .nav-btn { padding: 6px 12px; font-size: 1.1rem; border-width: 2px; }
+
+    .card {
+        width: 90%;
+        padding: 20px;
+        margin-top: 10px;
+    }
+    h2 { font-size: 2.2rem; margin-bottom: 5px; }
+    .inventory-icon { font-size: 4rem; }
+    .monster-name { font-size: 2rem; }
+    .monster-hp { font-size: 1.2rem; margin-bottom: 10px; }
+    .action-btn { font-size: 1.2rem; padding: 10px 20px; }
+}
