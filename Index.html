@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Queen Up</title>
+    <link rel="stylesheet" href="Queen.css">
+</head>
+
+<body>
+
+    <h1>Queen Up</h1>
+    
+    <div id="view-play" class="view active">
+        <div id="stats">
+            <div class="stat-box" id="timer-box">TIME <span id="timer">2:00</span></div>
+            <div class="stat-box">QUEENS <span class="score-symbol">♛ </span><span id="score">0</span></div>
+        </div>
+        <div id="board"></div>
+    </div>
+
+    <div id="view-inventory" class="view hidden">
+        <h2>Your Arsenal</h2>
+        <div class="card">
+            <div class="inventory-icon">♛</div>
+            <div class="inventory-count">Total Queens: <span id="inv-queens">0</span></div>
+        </div>
+    </div>
+
+    <div id="view-battle" class="view hidden">
+        <h2>Kingdom <span id="kingdom-num">1</span></h2>
+        <div class="card">
+            <div class="monster-name" id="monster-name">Goblin Brute</div>
+            <div class="monster-hp" id="monster-hp">HP: 3 Queens Needed</div>
+            <button id="btn-attack" class="action-btn" onclick="attackMonster()">Deploy Queens</button>
+        </div>
+    </div>
+
+    <div id="nav-bar">
+        <button id="nav-play" class="nav-btn active" onclick="switchView('play')">Play</button>
+        <button id="nav-inventory" class="nav-btn" onclick="switchView('inventory')">Inventory</button>
+        <button id="nav-battle" class="nav-btn" onclick="switchView('battle')">Battle</button>
+    </div>
+
+    <script src="Queen.js"></script>
+</body>
+
+</html>

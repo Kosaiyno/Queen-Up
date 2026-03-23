@@ -1,0 +1,342 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Fredoka', cursive;
+    text-align: center;
+    background: #0f172a; 
+    color: #1e293b;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: -20px; right: -20px; bottom: -20px; left: -20px; 
+    background: url('map.jpg') no-repeat center center;
+    background-size: cover;
+    opacity: 0.4;
+    filter: blur(8px);
+    z-index: -1; 
+}
+
+h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    color: #fff;
+    -webkit-text-stroke: 2px #db2777; 
+    text-shadow: 
+        0 4px 0 #be185d,
+        0 6px 15px rgba(0,0,0,0.3);
+    line-height: 1;
+}
+
+#stats {
+    display: flex;
+    justify-content: space-between;
+    width: 470px;
+    margin: 0 auto 10px auto;
+}
+
+.stat-box {
+    background: #fff;
+    padding: 8px 20px;
+    border-radius: 30px; 
+    border: 3px solid #f87171;
+    box-shadow: 
+        0 6px 0 #ef4444,
+        0 8px 10px rgba(0,0,0,0.2);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+#timer { color: #0284c7; }
+
+#score {
+    color: #c026d3; 
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.score-symbol {
+    color: #f43f5e;
+    margin-left: 5px;
+    margin-right: -2px;
+}
+
+#board {
+    box-sizing: content-box;
+    margin: 0 auto;
+    padding: 0;
+    background: #e2e8f0; /* Light Grey as requested */
+    border-radius: 20px;
+    box-shadow: 
+        0 15px 0 rgba(0,0,0,0.1),
+        0 20px 30px rgba(0,0,0,0.2);
+    border: 8px solid #cbd5e1;
+    position: relative;
+    overflow: hidden;
+    width: 470px;
+    height: 470px;
+}
+
+.tile {
+    position: absolute;
+    background: transparent; /* Fully invisible until hover */
+    border-radius: 12px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem; 
+    line-height: 1;
+    cursor: grab;
+    user-select: none;
+    
+    transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2), 
+                left 0.3s ease-out, 
+                opacity 0.2s, 
+                transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                background 0.2s;
+    z-index: 10;
+}
+
+.tile:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.tile:active {
+    cursor: grabbing;
+    background: #fff;
+    z-index: 20;
+    transform: scale(1.1); 
+    box-shadow: 0 10px 15px rgba(0,0,0,0.15);
+}
+
+.piece-pawn { color: #4ade80; text-shadow: 0 4px 0 #16a34a, 0 6px 10px rgba(0,0,0,0.2); }
+.piece-knight { color: #fb7185; text-shadow: 0 4px 0 #e11d48, 0 6px 10px rgba(0,0,0,0.2); }
+.piece-bishop { color: #facc15; text-shadow: 0 4px 0 #ca8a04, 0 6px 10px rgba(0,0,0,0.2); }
+.piece-rook { color: #38bdf8; text-shadow: 0 4px 0 #0284c7, 0 6px 10px rgba(0,0,0,0.2); }
+.piece-queen { color: #c084fc; text-shadow: 0 4px 0 #9333ea, 0 6px 10px rgba(0,0,0,0.2); }
+
+@keyframes freeze-shake {
+    0%, 100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+}
+
+.timer-frozen {
+    background: #e0f2fe !important;
+    border-color: #38bdf8 !important;
+    box-shadow: 0 8px 0 #0284c7 !important;
+    animation: freeze-shake 0.5s ease-in-out;
+}
+
+@keyframes pulse-ring-anim {
+    0% { transform: scale(0.5); opacity: 1; border-width: 20px; }
+    100% { transform: scale(3.5); opacity: 0; border-width: 2px; }
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 75px; 
+    height: 75px;
+    border-radius: 50%;
+    border: solid #fb7185; 
+    pointer-events: none;
+    z-index: 50;
+    animation: pulse-ring-anim 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes conversion-flash {
+    0% { filter: brightness(1); transform: scale(1); }
+    50% { filter: brightness(1.5); transform: scale(1.3); z-index: 60; }
+    100% { filter: brightness(1); transform: scale(1); }
+}
+
+.conversion-effect {
+    animation: conversion-flash 0.5s ease-in-out;
+}
+
+@keyframes shake-hard {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    20% { transform: translate(-4px, 2px) rotate(-1deg); }
+    40% { transform: translate(4px, -2px) rotate(1deg); }
+    60% { transform: translate(-2px, -3px) rotate(-1deg); }
+    80% { transform: translate(2px, 3px) rotate(1deg); }
+}
+
+.shake {
+    animation: shake-hard 0.4s both;
+}
+
+@keyframes flash-screen {
+    0% { background-color: rgba(255, 255, 255, 0.85); box-shadow: 0 15px 0 rgba(0,0,0,0.1); }
+    50% { background-color: #fce7f3; box-shadow: 0 0 50px #f472b6, 0 15px 0 rgba(0,0,0,0.1); }
+    100% { background-color: rgba(255, 255, 255, 0.85); box-shadow: 0 15px 0 rgba(0,0,0,0.1); } 
+}
+
+.board-flash {
+    animation: flash-screen 0.6s ease-out forwards;
+}
+
+@keyframes queen-up-pop {
+    0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); opacity: 0; }
+    20% { transform: translate(-50%, -50%) scale(1.2) rotate(5deg); opacity: 1; filter: drop-shadow(0 0 20px rgba(244,114,182,0.8)); }
+    30% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 30px rgba(244,114,182,0.8)); }
+    80% { transform: translate(-50%, -60%) scale(1.05); opacity: 1; }
+    100% { transform: translate(-50%, -100%) scale(0.5); opacity: 0; }
+}
+
+.queen-fly {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background: #ec4899; 
+    color: #fff;
+    font-size: 5rem;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    padding: 20px 50px;
+    border-radius: 100px; 
+    border: 8px solid #fbcfe8;
+    text-shadow: 0 6px 0 #be185d;
+    box-shadow: 0 15px 0 #be185d, 0 25px 30px rgba(0,0,0,0.4);
+    pointer-events: none;
+    z-index: 9999;
+    white-space: nowrap;
+    animation: queen-up-pop 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+.queen-fly-icon {
+    color: #fde047;
+    margin-right: 15px;
+    -webkit-text-stroke: 2px #ca8a04;
+    text-shadow: 0 4px 0 #ca8a04;
+}
+
+/* Meta Game UI */
+.view {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.view.active {
+    display: flex;
+}
+.view.hidden {
+    display: none;
+}
+
+#nav-bar {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    margin-bottom: 0;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px 25px;
+    border-radius: 40px;
+}
+
+.nav-btn {
+    font-family: 'Fredoka', cursive;
+    font-size: 1.3rem;
+    padding: 8px 25px;
+    background: #fff;
+    color: #475569;
+    border: 3px solid #cbd5e1;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.nav-btn.active {
+    background: #f472b6;
+    color: #fff;
+    border-color: #be185d;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+h2 {
+    font-size: 2.8rem;
+    color: #fff;
+    -webkit-text-stroke: 2px #db2777;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.card {
+    background: #fff;
+    border: 6px solid #cbd5e1;
+    border-radius: 30px;
+    padding: 30px;
+    width: 400px;
+    color: #334155;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.inventory-icon {
+    font-size: 6rem;
+    color: #c084fc;
+    text-shadow: 0 6px 0 #9333ea;
+    margin-bottom: 5px;
+}
+
+.inventory-count {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.monster-name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ef4444;
+    margin-bottom: 5px;
+}
+
+.monster-hp {
+    font-size: 1.5rem;
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    font-family: 'Fredoka', cursive;
+    font-size: 1.5rem;
+    padding: 12px 25px;
+    background: #4ade80;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #16a34a;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+.action-btn:active {
+    transform: translateY(6px);
+    box-shadow: 0 0 0 #16a34a;
+}
+.action-btn:disabled {
+    background: #cbd5e1;
+    box-shadow: 0 6px 0 #94a3b8;
+    color: #64748b;
+    cursor: not-allowed;
+}
