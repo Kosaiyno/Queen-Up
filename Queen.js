@@ -249,34 +249,60 @@ function dragLeave() {}
 function dragDrop() { otherTile = this; }
 
 // Touch handlers for mobile
-let touchTarget = null;
+let startX, startY;
+let touchSwapped = false;
+
 function touchStart(e) {
     if (e.touches.length > 1) return;
     if(!isProcessing && !gameEnded) {
         currTile = this; 
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        touchSwapped = false;
+        
         if(!gameStarted) {
             gameStarted = true;
             startGame();
         }
     }
 }
+
 function touchMove(e) {
-    if (e.touches.length > 1) return;
+    if (e.touches.length > 1 || !currTile || isProcessing || gameEnded || touchSwapped) return;
     e.preventDefault(); // Prevents page scrolling while swiping
-    let obj = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
-    if (obj && obj.classList.contains("tile") && obj !== currTile) {
-        touchTarget = obj;
+    
+    let currentX = e.touches[0].clientX;
+    let currentY = e.touches[0].clientY;
+
+    let diffX = currentX - startX;
+    let diffY = currentY - startY;
+
+    // Trigger instantly if finger slides > 20px in any direction!
+    if (Math.abs(diffX) > 20 || Math.abs(diffY) > 20) {
+        touchSwapped = true;
+        let r = parseInt(currTile.dataset.r);
+        let c = parseInt(currTile.dataset.c);
+
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 0) c += 1; else c -= 1; // Horizontal
+        } else {
+            if (diffY > 0) r += 1; else r -= 1; // Vertical
+        }
+
+        if (r >= 0 && r < rows && c >= 0 && c < cols) {
+            otherTile = grid[r][c].dom;
+            dragEnd();
+        } else {
+            currTile = null;
+        }
     }
 }
+
 function touchEnd(e) {
-    if (touchTarget && currTile) {
-        otherTile = touchTarget;
-        dragEnd();
-    } else {
+    if (!touchSwapped) {
         currTile = null;
-        otherTile = null;
     }
-    touchTarget = null;
+    touchSwapped = false;
 }
 
 function dragEnd() {
