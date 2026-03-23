@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+:root {
+    --tile-sz: 75px;
+    --b-gap: 10px;
+}
+
 body {
     font-family: 'Fredoka', cursive;
     text-align: center;
@@ -92,8 +97,8 @@ h1 {
     border: 8px solid #cbd5e1;
     position: relative;
     overflow: hidden;
-    width: 470px;
-    height: 470px;
+    width: calc(6 * var(--tile-sz) + 2 * var(--b-gap));
+    height: calc(6 * var(--tile-sz) + 2 * var(--b-gap));
 }
 
 .tile {
@@ -154,8 +159,8 @@ h1 {
 
 .pulse-ring {
     position: absolute;
-    width: 75px; 
-    height: 75px;
+    width: var(--tile-sz); 
+    height: var(--tile-sz);
     border-radius: 50%;
     border: solid #fb7185; 
     pointer-events: none;
@@ -343,6 +348,11 @@ h2 {
 
 /* Mobile Responsiveness */
 @media (max-width: 500px) {
+    :root {
+        --b-gap: 2vw;
+        --tile-sz: calc((95vw - 4vw) / 6);
+    }
+
     h1 {
         font-size: 2.2rem;
         margin-bottom: 5px;
@@ -355,9 +365,16 @@ h2 {
     .stat-box { font-size: 1.1rem; padding: 6px 12px; border-width: 2px; }
     
     #board {
-        transform: scale(0.78);
-        transform-origin: top center;
-        margin-bottom: -104px; /* Collapse whitespace created by CSS scaling */
+        border-width: 5px;
+        border-radius: 12px;
+    }
+    
+    .tile { font-size: 2.5rem; border-radius: 8px; }
+    
+    .queen-fly {
+        font-size: 2.5rem;
+        padding: 10px 25px;
+        border-width: 4px;
     }
 
     #nav-bar { padding: 8px 15px; margin-top: 5px; gap: 8px; }

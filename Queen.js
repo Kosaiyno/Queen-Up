@@ -182,8 +182,8 @@ function createBoard() {
 function moveDOM(dom, newR, newC) {
     dom.dataset.r = newR;
     dom.dataset.c = newC;
-    dom.style.top = (newR * 75 + 10) + "px"; // 10 is padding offset
-    dom.style.left = (newC * 75 + 10) + "px";
+    dom.style.top = `calc(${newR} * var(--tile-sz) + var(--b-gap))`;
+    dom.style.left = `calc(${newC} * var(--tile-sz) + var(--b-gap))`;
 }
 
 function createDOM(r, c, piece, isFallingFromAbove) {
@@ -195,22 +195,22 @@ function createDOM(r, c, piece, isFallingFromAbove) {
     
     tile.dataset.r = r;
     tile.dataset.c = c;
-    tile.style.width = "75px";
-    tile.style.height = "75px";
-    tile.style.left = (c * 75 + 10) + "px";
+    tile.style.width = "var(--tile-sz)";
+    tile.style.height = "var(--tile-sz)";
+    tile.style.left = `calc(${c} * var(--tile-sz) + var(--b-gap))`;
 
     if (isFallingFromAbove) {
         let fallR = r - rows;
-        tile.style.top = (fallR * 75 + 10) + "px";
+        tile.style.top = `calc(${fallR} * var(--tile-sz) + var(--b-gap))`;
         board.appendChild(tile);
         
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                tile.style.top = (r * 75 + 10) + "px";
+                tile.style.top = `calc(${r} * var(--tile-sz) + var(--b-gap))`;
             });
         });
     } else {
-        tile.style.top = (r * 75 + 10) + "px";
+        tile.style.top = `calc(${r} * var(--tile-sz) + var(--b-gap))`;
         board.appendChild(tile);
     }
     
@@ -434,10 +434,10 @@ function showFloatingText(text, r, c, type) {
     let fl = document.createElement("div");
     fl.innerText = text;
     fl.style.position = "absolute";
-    fl.style.left = (c * 75 + 10) + "px";
-    fl.style.top = (r * 75 + 10) + "px";
-    fl.style.width = "75px";
-    fl.style.height = "75px";
+    fl.style.left = `calc(${c} * var(--tile-sz) + var(--b-gap))`;
+    fl.style.top = `calc(${r} * var(--tile-sz) + var(--b-gap))`;
+    fl.style.width = "var(--tile-sz)";
+    fl.style.height = "var(--tile-sz)";
     fl.style.display = "flex";
     fl.style.alignItems = "center";
     fl.style.justifyContent = "center";
