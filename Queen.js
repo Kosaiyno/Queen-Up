@@ -25,27 +25,21 @@ let lastSwapCoords = [];
 let isProcessing = false;
 
 // UI & Metagame State
-let timeLeft = 120; // 2 minutes
+let timeLeft = 60; // 1 minute
 let queenCount = 0;
 let gameInterval = null;
 let gameEnded = false;
 let gameStarted = false;
 let isTimerFrozen = false;
 
-let totalQueens = 0;
-let kingdomLevel = 1;
-
-let monsters = [
-    { name: "Slime Soldier", hp: 3 },
-    { name: "Goblin Brute", hp: 8 },
-    { name: "Skeleton Guard", hp: 15 },
-    { name: "Orc Warlord", hp: 30 },
-    { name: "Dark Sorcerer", hp: 50 },
-    { name: "Shadow Dragon", hp: 150 }
-];
+// Persistent Data (Local Storage)
+let totalQueens = parseInt(localStorage.getItem("--q-total")) || 0;
+let highScore = parseInt(localStorage.getItem("--q-best")) || 0;
+let playerName = localStorage.getItem("--q-name") || "Player";
+let boosters = JSON.parse(localStorage.getItem("--q-boosts")) || { freeze: 0, pulse: 0 };
 
 function switchView(viewName) {
-    let views = ["play", "inventory", "battle"];
+    let views = ["play", "store", "leaderboard", "profile"];
     views.forEach(v => {
         let el = document.getElementById("view-" + v);
         let btn = document.getElementById("nav-" + v);
@@ -60,45 +54,76 @@ function switchView(viewName) {
         }
     });
 
+    if (viewName === "leaderboard") updateLeaderboard();
     updateMetagameUI();
 }
 
 function updateMetagameUI() {
-    document.getElementById("inv-queens").innerText = totalQueens;
+    document.getElementById("best-score").innerText = highScore;
+    document.getElementById("score").innerText = queenCount;
     
-    let isGameOver = (kingdomLevel - 1) >= monsters.length;
-    if (isGameOver) {
-        document.getElementById("kingdom-num").innerText = "Cleared";
-        document.getElementById("monster-name").innerText = "All Conquered!";
-        document.getElementById("monster-hp").innerText = "You Win!";
-        let btn = document.getElementById("btn-attack");
-        btn.innerText = "Victory!";
-        btn.disabled = true;
-    } else {
-        let m = monsters[kingdomLevel - 1];
-        document.getElementById("kingdom-num").innerText = kingdomLevel;
-        document.getElementById("monster-name").innerText = m.name;
-        document.getElementById("monster-hp").innerText = "HP: " + m.hp + " Queens Needed";
-        
-        let btn = document.getElementById("btn-attack");
-        if (totalQueens >= m.hp) {
-            btn.innerText = "Deploy " + m.hp + " Queens!";
-            btn.disabled = false;
-        } else {
-            btn.innerText = "Need " + (m.hp - totalQueens) + " More";
-            btn.disabled = true;
-        }
+    // Store
+    if (document.getElementById("boost-freeze")) {
+        document.getElementById("boost-freeze").innerText = boosters.freeze;
+        document.getElementById("boost-pulse").innerText = boosters.pulse;
+    }
+
+    // Profile
+    if (document.getElementById("prof-pb")) {
+        document.getElementById("player-name-input").value = playerName;
+        document.getElementById("prof-pb").innerText = highScore;
+        document.getElementById("prof-total").innerText = totalQueens;
     }
 }
 
-function attackMonster() {
-    let m = monsters[kingdomLevel - 1];
-    if (totalQueens >= m.hp) {
-        totalQueens -= m.hp;
-        kingdomLevel++;
-        alert("You defeated the " + m.name + "!");
+function buyBooster(type) {
+    let cost = type === "freeze" ? 10 : 20;
+    if (totalQueens >= cost) {
+        totalQueens -= cost;
+        boosters[type]++;
+        savePersistent();
         updateMetagameUI();
+        alert("Purchased " + type + " booster!");
+    } else {
+        alert("Need more Queens! Go Harvest!");
     }
+}
+
+function updatePlayerName(newName) {
+    playerName = newName || "Player";
+    savePersistent();
+}
+
+function savePersistent() {
+    localStorage.setItem("--q-total", totalQueens);
+    localStorage.setItem("--q-best", highScore);
+    localStorage.setItem("--q-name", playerName);
+    localStorage.setItem("--q-boosts", JSON.stringify(boosters));
+}
+
+function updateLeaderboard() {
+    const leaderboardBody = document.getElementById("leaderboard-body");
+    leaderboardBody.innerHTML = "";
+    
+    // Mock Leaderboard Data
+    const mockPlayers = [
+        { name: "Grandmaster", best: 85 },
+        { name: "ChessKing", best: 62 },
+        { name: "PuzzlePro", best: 45 },
+        { name: "Antigravity", best: 38 },
+        { name: playerName, best: highScore }
+    ].sort((a, b) => b.best - a.best);
+
+    mockPlayers.forEach((p, index) => {
+        let row = document.createElement("tr");
+        if (p.name === playerName) row.style.background = "rgba(244,114,182,0.2)";
+        row.innerHTML = `
+            <td>#${index + 1}</td>
+            <td>${p.name}</td>
+            <td>${p.best} ♛</td>
+        `;
+        leaderboardBody.appendChild(row);
+    });
 }
 
 function updateTimerDisplay() {
@@ -111,10 +136,10 @@ function startGame() {
     updateTimerDisplay();
     gameInterval = setInterval(() => {
         if (gameEnded) return;
-        if (isTimerFrozen) return; // Skip time reduction!
+        if (isTimerFrozen) return;
         
         timeLeft--;
-        if (timeLeft < 0) timeLeft = 0; // prevent negative
+        if (timeLeft < 0) timeLeft = 0;
         updateTimerDisplay();
         
         if (timeLeft <= 0) {
@@ -129,16 +154,20 @@ function endGame() {
     isProcessing = true;
     
     totalQueens += queenCount;
+    if (queenCount > highScore) {
+        highScore = queenCount;
+        alert("NEW PERSONAL BEST! " + highScore + " Queens!");
+    }
+    
+    savePersistent();
     updateMetagameUI();
     
-    alert("Time's Up! You harvested " + queenCount + " Queens!\nThey have been added to your Arsenal.");
-    
-    // Automatically reset the board for next run
+    alert("Time's Up! You harvested " + queenCount + " Queens!\nTotal Arsenal: " + totalQueens);
     resetSession();
 }
 
 function resetSession() {
-    timeLeft = 120;
+    timeLeft = 60; // 1 minute
     queenCount = 0;
     gameEnded = false;
     gameStarted = false;
@@ -691,3 +720,4 @@ function applyGravity() {
 }
 
 createBoard();
+updateMetagameUI();

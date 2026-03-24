@@ -53,8 +53,10 @@ h1 {
 
 #stats {
     display: flex;
-    justify-content: space-between;
-    width: 400px;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 480px;
     margin: 0 auto 5px auto;
 }
 
@@ -302,49 +304,107 @@ h2 {
 }
 
 .inventory-icon {
-    font-size: 6rem;
+    font-size: 3rem;
     color: #c084fc;
-    text-shadow: 0 6px 0 #9333ea;
+    text-shadow: 0 4px 0 #9333ea;
     margin-bottom: 5px;
 }
-
-.inventory-count {
-    font-size: 2rem;
-    font-weight: 700;
+.store-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 20px;
+    border: 2px solid #e2e8f0;
 }
 
-.monster-name {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #ef4444;
-    margin-bottom: 5px;
+/* Leaderboard Section */
+.leaderboard-card {
+    padding: 20px;
 }
 
-.monster-hp {
-    font-size: 1.5rem;
+#leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+#leaderboard-table th {
+    text-align: left;
     color: #64748b;
+    padding: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+#leaderboard-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+#leaderboard-refresh-note {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 10px;
+}
+
+/* Profile Section */
+.profile-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     margin-bottom: 20px;
+}
+
+.profile-field label {
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #475569;
+}
+
+.profile-field input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    border: 3px solid #cbd5e1;
+    font-family: 'Fredoka', cursive;
+    font-size: 1.1rem;
+    color: #334155;
+}
+
+.profile-stats {
+    text-align: left;
+    border-top: 2px solid #f1f5f9;
+    padding-top: 15px;
+}
+
+.profile-stats p {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 5px 0;
+    color: #1e293b;
 }
 
 .action-btn {
     font-family: 'Fredoka', cursive;
-    font-size: 1.5rem;
-    padding: 12px 25px;
+    font-size: 1.1rem;
+    padding: 10px 20px;
     background: #4ade80;
     color: white;
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    box-shadow: 0 6px 0 #16a34a;
+    box-shadow: 0 4px 0 #16a34a;
     transition: transform 0.1s, box-shadow 0.1s;
 }
 .action-btn:active {
-    transform: translateY(6px);
+    transform: translateY(4px);
     box-shadow: 0 0 0 #16a34a;
 }
 .action-btn:disabled {
     background: #cbd5e1;
-    box-shadow: 0 6px 0 #94a3b8;
+    box-shadow: 0 4px 0 #94a3b8;
     color: #64748b;
     cursor: not-allowed;
 }

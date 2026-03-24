@@ -14,33 +14,67 @@
     
     <div id="view-play" class="view active">
         <div id="stats">
-            <div class="stat-box" id="timer-box">TIME <span id="timer">2:00</span></div>
+            <div class="stat-box" id="timer-box">TIME <span id="timer">1:00</span></div>
+            <div class="stat-box">BEST <span id="best-score">0</span></div>
             <div class="stat-box">QUEENS <span class="score-symbol">♛ </span><span id="score">0</span></div>
         </div>
         <div id="board"></div>
     </div>
 
-    <div id="view-inventory" class="view hidden">
-        <h2>Your Arsenal</h2>
+    <div id="view-store" class="view hidden">
+        <h2>Booster Store</h2>
         <div class="card">
-            <div class="inventory-icon">♛</div>
-            <div class="inventory-count">Total Queens: <span id="inv-queens">0</span></div>
+            <div class="store-item">
+                <div class="inventory-icon">⚡</div>
+                <div class="inventory-count">Freeze Boosters: <span id="boost-freeze">0</span></div>
+                <button class="action-btn" onclick="buyBooster('freeze')">Buy (10 Queens)</button>
+            </div>
+            <div class="store-item" style="margin-top: 20px;">
+                <div class="inventory-icon">💥</div>
+                <div class="inventory-count">Pulse Boosters: <span id="boost-pulse">0</span></div>
+                <button class="action-btn" onclick="buyBooster('pulse')">Buy (20 Queens)</button>
+            </div>
         </div>
     </div>
 
-    <div id="view-battle" class="view hidden">
-        <h2>Kingdom <span id="kingdom-num">1</span></h2>
+    <div id="view-leaderboard" class="view hidden">
+        <h2>Leaderboard</h2>
+        <div class="card leaderboard-card">
+            <table id="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Best</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    <!-- Dynamic Content -->
+                </tbody>
+            </table>
+            <p id="leaderboard-refresh-note">Refreshes every 24h</p>
+        </div>
+    </div>
+
+    <div id="view-profile" class="view hidden">
+        <h2>Profile</h2>
         <div class="card">
-            <div class="monster-name" id="monster-name">Goblin Brute</div>
-            <div class="monster-hp" id="monster-hp">HP: 3 Queens Needed</div>
-            <button id="btn-attack" class="action-btn" onclick="attackMonster()">Deploy Queens</button>
+            <div class="profile-field">
+                <label>Name:</label>
+                <input type="text" id="player-name-input" onchange="updatePlayerName(this.value)" placeholder="Enter Name">
+            </div>
+            <div class="profile-stats">
+                <p>Personal Best: <span id="prof-pb">0</span></p>
+                <p>Total Queens Harvested: <span id="prof-total">0</span></p>
+            </div>
         </div>
     </div>
 
     <div id="nav-bar">
         <button id="nav-play" class="nav-btn active" onclick="switchView('play')">Play</button>
-        <button id="nav-inventory" class="nav-btn" onclick="switchView('inventory')">Inventory</button>
-        <button id="nav-battle" class="nav-btn" onclick="switchView('battle')">Battle</button>
+        <button id="nav-store" class="nav-btn" onclick="switchView('store')">Store</button>
+        <button id="nav-leaderboard" class="nav-btn" onclick="switchView('leaderboard')">Ranks</button>
+        <button id="nav-profile" class="nav-btn" onclick="switchView('profile')">Profile</button>
     </div>
 
     <script src="Queen.js"></script>
