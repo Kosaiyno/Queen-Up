@@ -89,7 +89,7 @@ h1 {
     box-sizing: content-box;
     margin: 0 auto;
     padding: 0;
-    background: #e2e8f0;
+    background: #334155;
     border-radius: 20px;
     box-shadow: 
         0 15px 0 rgba(0,0,0,0.1),
@@ -402,7 +402,7 @@ h2 {
         border-width: 5px;
         border-color: #cbd5e1;
         border-radius: 12px;
-        background-color: #e2e8f0; 
+        background-color: #334155; 
         box-shadow: 0 15px 0 rgba(0,0,0,0.1), 0 20px 30px rgba(0,0,0,0.2);
         margin: auto auto; 
     }
