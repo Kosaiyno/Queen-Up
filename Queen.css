@@ -136,11 +136,11 @@ h1 {
     box-shadow: 0 10px 15px rgba(0,0,0,0.15);
 }
 
-.piece-pawn { color: #4ade80; -webkit-text-stroke: 1px #4ade80; text-shadow: none; }
-.piece-knight { color: #fb7185; -webkit-text-stroke: 1px #fb7185; text-shadow: none; }
-.piece-bishop { color: #facc15; -webkit-text-stroke: 1px #facc15; text-shadow: none; }
-.piece-rook { color: #38bdf8; -webkit-text-stroke: 1px #38bdf8; text-shadow: none; }
-.piece-queen { color: #c084fc; -webkit-text-stroke: 1px #c084fc; text-shadow: none; }
+.piece-pawn { color: #00e676; -webkit-text-stroke: 3px #00e676; text-shadow: none; }
+.piece-knight { color: #ff2a5f; -webkit-text-stroke: 3px #ff2a5f; text-shadow: none; }
+.piece-bishop { color: #ffea00; -webkit-text-stroke: 3px #ffea00; text-shadow: none; }
+.piece-rook { color: #00bfff; -webkit-text-stroke: 3px #00bfff; text-shadow: none; }
+.piece-queen { color: #d500f9; -webkit-text-stroke: 3px #d500f9; text-shadow: none; }
 
 @keyframes freeze-shake {
     0%, 100% { transform: translateX(0); }
