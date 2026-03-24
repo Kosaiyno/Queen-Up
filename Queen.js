@@ -478,7 +478,7 @@ function showFloatingText(text, r, c, type) {
     board.appendChild(fl);
     
     requestAnimationFrame(() => {
-        fl.style.top = (r * 75 - 60) + "px";
+        fl.style.top = (r * 65 - 60) + "px";
         fl.style.opacity = "0";
         fl.style.transform = "scale(1.5)";
     });
@@ -506,8 +506,8 @@ function applyBonusEffect(type, centerR, centerC, centerPiece) {
     if (type === "pulse") {
         let ring = document.createElement("div");
         ring.className = "pulse-ring";
-        ring.style.left = (centerC * 75 + 10) + "px";
-        ring.style.top = (centerR * 75 + 10) + "px";
+        ring.style.left = (centerC * 65 + 10) + "px";
+        ring.style.top = (centerR * 65 + 10) + "px";
         board.appendChild(ring);
         setTimeout(() => ring.remove(), 600);
     }
