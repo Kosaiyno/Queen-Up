@@ -103,8 +103,6 @@ h1 {
 
 .tile {
     position: absolute;
-    background: transparent; /* Fully invisible until hover */
-    border-radius: 12px; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -116,31 +114,72 @@ h1 {
     cursor: grab;
     user-select: none;
     
+    border: 2px solid rgba(255,255,255,0.4);
+    
     transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2), 
                 left 0.3s ease-out, 
                 opacity 0.2s, 
                 transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                background 0.2s;
+                filter 0.2s;
     z-index: 10;
 }
 
 .tile:hover {
-    background: rgba(255, 255, 255, 0.9);
+    filter: brightness(1.15);
 }
 
 .tile:active {
     cursor: grabbing;
-    background: #fff;
     z-index: 20;
-    transform: scale(1.1); 
-    box-shadow: 0 10px 15px rgba(0,0,0,0.15);
+    transform: scale(1.1) translateY(-4px); 
+    filter: brightness(1.25);
 }
 
-.piece-pawn { color: #4ade80; text-shadow: 0 4px 0 #16a34a, 0 6px 10px rgba(0,0,0,0.2); }
-.piece-knight { color: #fb7185; text-shadow: 0 4px 0 #e11d48, 0 6px 10px rgba(0,0,0,0.2); }
-.piece-bishop { color: #facc15; text-shadow: 0 4px 0 #ca8a04, 0 6px 10px rgba(0,0,0,0.2); }
-.piece-rook { color: #38bdf8; text-shadow: 0 4px 0 #0284c7, 0 6px 10px rgba(0,0,0,0.2); }
-.piece-queen { color: #c084fc; text-shadow: 0 4px 0 #9333ea, 0 6px 10px rgba(0,0,0,0.2); }
+/* THICK CANDY STYLE PIECES */
+.piece-pawn { 
+    background: radial-gradient(circle at 30% 30%, #86efac 0%, #22c55e 50%, #16a34a 100%);
+    box-shadow: inset -4px -4px 6px rgba(0,0,0,0.2), inset 4px 4px 6px rgba(255,255,255,0.6), 0 5px 0 #15803d, 0 8px 8px rgba(0,0,0,0.3);
+    color: #fff;
+    -webkit-text-stroke: 1px #16a34a;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    border-radius: 50%; 
+}
+
+.piece-knight { 
+    background: radial-gradient(circle at 30% 30%, #fecdd3 0%, #f43f5e 50%, #e11d48 100%);
+    box-shadow: inset -4px -4px 6px rgba(0,0,0,0.2), inset 4px 4px 6px rgba(255,255,255,0.6), 0 5px 0 #be185d, 0 8px 8px rgba(0,0,0,0.3);
+    color: #fff;
+    -webkit-text-stroke: 1px #e11d48;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    border-radius: 20px 0 20px 0; 
+}
+
+.piece-bishop { 
+    background: radial-gradient(circle at 30% 30%, #fef08a 0%, #facc15 50%, #ca8a04 100%);
+    box-shadow: inset -4px -4px 6px rgba(0,0,0,0.2), inset 4px 4px 6px rgba(255,255,255,0.6), 0 5px 0 #a16207, 0 8px 8px rgba(0,0,0,0.3);
+    color: #fff;
+    -webkit-text-stroke: 1px #ca8a04;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    border-radius: 12px; 
+}
+
+.piece-rook { 
+    background: radial-gradient(circle at 30% 30%, #7dd3fc 0%, #0ea5e9 50%, #0284c7 100%);
+    box-shadow: inset -4px -4px 6px rgba(0,0,0,0.2), inset 4px 4px 6px rgba(255,255,255,0.6), 0 5px 0 #0369a1, 0 8px 8px rgba(0,0,0,0.3);
+    color: #fff;
+    -webkit-text-stroke: 1px #0284c7;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    border-radius: 6px; 
+}
+
+.piece-queen { 
+    background: radial-gradient(circle at 30% 30%, #e9d5ff 0%, #a855f7 50%, #9333ea 100%);
+    box-shadow: inset -4px -4px 6px rgba(0,0,0,0.2), inset 4px 4px 6px rgba(255,255,255,0.6), 0 5px 0 #7e22ce, 0 8px 8px rgba(0,0,0,0.3);
+    color: #fff;
+    -webkit-text-stroke: 1px #9333ea;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.8);
+    border-radius: 50%; 
+}
 
 @keyframes freeze-shake {
     0%, 100% { transform: translateX(0); }
@@ -407,7 +446,7 @@ h2 {
         margin: auto auto; 
     }
     
-    .tile { font-size: 1.8rem; border-radius: 8px; width: calc(var(--tile-sz) - 6px) !important; height: calc(var(--tile-sz) - 6px) !important; margin: 3px; } 
+    .tile { font-size: 1.8rem; width: calc(var(--tile-sz) - 6px) !important; height: calc(var(--tile-sz) - 6px) !important; margin: 3px; } 
     
     .queen-fly {
         font-size: 3.5rem;
