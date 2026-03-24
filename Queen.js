@@ -37,9 +37,24 @@ let totalQueens = parseInt(localStorage.getItem("--q-total")) || 0;
 let highScore = parseInt(localStorage.getItem("--q-best")) || 0;
 let playerName = localStorage.getItem("--q-name") || "Player";
 let boosters = JSON.parse(localStorage.getItem("--q-boosts")) || { freeze: 0, pulse: 0 };
+let dailyData = JSON.parse(localStorage.getItem("--q-daily")) || { date: "", harvested: 0, bestRun: 0, completed: [] };
+
+// Daily Challenge Definitions
+const CHALLENGES = [
+    { id: "h10", desc: "Harvest 10 Queens in one run", goal: 10, reward: "freeze", type: "bestRun" },
+    { id: "hTotal25", desc: "Harvest 25 Total Queens today", goal: 25, reward: "pulse", type: "harvested" }
+];
+
+function checkDailyReset() {
+    let today = new Date().toDateString();
+    if (dailyData.date !== today) {
+        dailyData = { date: today, harvested: 0, bestRun: 0, completed: [] };
+        savePersistent();
+    }
+}
 
 function switchView(viewName) {
-    let views = ["play", "store", "leaderboard", "profile"];
+    let views = ["play", "daily", "boosters", "leaderboard", "profile"];
     views.forEach(v => {
         let el = document.getElementById("view-" + v);
         let btn = document.getElementById("nav-" + v);
@@ -55,6 +70,7 @@ function switchView(viewName) {
     });
 
     if (viewName === "leaderboard") updateLeaderboard();
+    if (viewName === "daily") updateDailyUI();
     updateMetagameUI();
 }
 
@@ -62,7 +78,7 @@ function updateMetagameUI() {
     document.getElementById("best-score").innerText = highScore;
     document.getElementById("score").innerText = queenCount;
     
-    // Store
+    // Boosters
     if (document.getElementById("boost-freeze")) {
         document.getElementById("boost-freeze").innerText = boosters.freeze;
         document.getElementById("boost-pulse").innerText = boosters.pulse;
@@ -76,16 +92,41 @@ function updateMetagameUI() {
     }
 }
 
-function buyBooster(type) {
-    let cost = type === "freeze" ? 10 : 20;
-    if (totalQueens >= cost) {
-        totalQueens -= cost;
-        boosters[type]++;
+function updateDailyUI() {
+    checkDailyReset();
+    const list = document.getElementById("daily-challenges-list");
+    list.innerHTML = "";
+
+    CHALLENGES.forEach(c => {
+        let currentProgress = c.type === "harvested" ? dailyData.harvested : dailyData.bestRun;
+        let isDone = dailyData.completed.includes(c.id);
+        let canClaim = !isDone && currentProgress >= c.goal;
+
+        let card = document.createElement("div");
+        card.className = "challenge-item";
+        card.innerHTML = `
+            <div class="challenge-info">
+                <strong>${c.desc}</strong>
+                <p>Progress: ${currentProgress} / ${c.goal}</p>
+                <p>Reward: 1 ${c.reward.toUpperCase()} Booster</p>
+            </div>
+            <button class="action-btn" ${!canClaim ? "disabled" : ""} onclick="claimReward('${c.id}')">
+                ${isDone ? "Completed" : canClaim ? "Claim!" : "Locked"}
+            </button>
+        `;
+        list.appendChild(card);
+    });
+}
+
+function claimReward(id) {
+    let c = CHALLENGES.find(x => x.id === id);
+    if (c && !dailyData.completed.includes(id)) {
+        dailyData.completed.push(id);
+        boosters[c.reward]++;
         savePersistent();
+        updateDailyUI();
         updateMetagameUI();
-        alert("Purchased " + type + " booster!");
-    } else {
-        alert("Need more Queens! Go Harvest!");
+        alert("Claimed 1 " + c.reward + " booster!");
     }
 }
 
@@ -99,6 +140,7 @@ function savePersistent() {
     localStorage.setItem("--q-best", highScore);
     localStorage.setItem("--q-name", playerName);
     localStorage.setItem("--q-boosts", JSON.stringify(boosters));
+    localStorage.setItem("--q-daily", JSON.stringify(dailyData));
 }
 
 function updateLeaderboard() {
@@ -154,6 +196,12 @@ function endGame() {
     isProcessing = true;
     
     totalQueens += queenCount;
+    
+    // Update Daily Progress
+    checkDailyReset();
+    dailyData.harvested += queenCount;
+    if (queenCount > dailyData.bestRun) dailyData.bestRun = queenCount;
+
     if (queenCount > highScore) {
         highScore = queenCount;
         alert("NEW PERSONAL BEST! " + highScore + " Queens!");

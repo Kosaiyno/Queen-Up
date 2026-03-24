@@ -309,6 +309,11 @@ h2 {
     text-shadow: 0 4px 0 #9333ea;
     margin-bottom: 5px;
 }
+.booster-desc {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 5px 0 0 0;
+}
 .store-item {
     display: flex;
     flex-direction: column;
@@ -317,6 +322,36 @@ h2 {
     background: #f8fafc;
     border-radius: 20px;
     border: 2px solid #e2e8f0;
+    width: 100%;
+}
+
+/* Daily Challenge Section */
+.challenge-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 20px;
+    border: 2px solid #e2e8f0;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.challenge-info {
+    flex: 1;
+}
+
+.challenge-info strong {
+    display: block;
+    font-size: 1.1rem;
+    color: #1e293b;
+}
+
+.challenge-info p {
+    margin: 2px 0;
+    font-size: 0.9rem;
+    color: #64748b;
 }
 
 /* Leaderboard Section */

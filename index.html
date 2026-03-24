@@ -21,19 +21,26 @@
         <div id="board"></div>
     </div>
 
-    <div id="view-store" class="view hidden">
-        <h2>Booster Store</h2>
+    <div id="view-boosters" class="view hidden">
+        <h2>Your Boosters</h2>
         <div class="card">
             <div class="store-item">
                 <div class="inventory-icon">⚡</div>
                 <div class="inventory-count">Freeze Boosters: <span id="boost-freeze">0</span></div>
-                <button class="action-btn" onclick="buyBooster('freeze')">Buy (10 Queens)</button>
+                <p class="booster-desc">Pauses time for 3 seconds</p>
             </div>
             <div class="store-item" style="margin-top: 20px;">
                 <div class="inventory-icon">💥</div>
                 <div class="inventory-count">Pulse Boosters: <span id="boost-pulse">0</span></div>
-                <button class="action-btn" onclick="buyBooster('pulse')">Buy (20 Queens)</button>
+                <p class="booster-desc">Upgrades surrounding pieces</p>
             </div>
+        </div>
+    </div>
+
+    <div id="view-daily" class="view hidden">
+        <h2>Daily Challenges</h2>
+        <div class="card" id="daily-challenges-list">
+            <!-- Challenges load here -->
         </div>
     </div>
 
@@ -72,7 +79,8 @@
 
     <div id="nav-bar">
         <button id="nav-play" class="nav-btn active" onclick="switchView('play')">Play</button>
-        <button id="nav-store" class="nav-btn" onclick="switchView('store')">Store</button>
+        <button id="nav-daily" class="nav-btn" onclick="switchView('daily')">Daily</button>
+        <button id="nav-boosters" class="nav-btn" onclick="switchView('boosters')">Boosters</button>
         <button id="nav-leaderboard" class="nav-btn" onclick="switchView('leaderboard')">Ranks</button>
         <button id="nav-profile" class="nav-btn" onclick="switchView('profile')">Profile</button>
     </div>
