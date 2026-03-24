@@ -54,7 +54,7 @@ function checkDailyReset() {
 }
 
 function switchView(viewName) {
-    let views = ["play", "daily", "boosters", "leaderboard", "profile"];
+    let views = ["play", "daily", "boosters", "leaderboard", "howto", "profile"];
     views.forEach(v => {
         let el = document.getElementById("view-" + v);
         let btn = document.getElementById("nav-" + v);

@@ -47,6 +47,7 @@
     <div id="view-leaderboard" class="view hidden">
         <h2>Leaderboard</h2>
         <div class="card leaderboard-card">
+            <p class="leaderboard-desc">Tracks highest Queens gotten in a single run.</p>
             <table id="leaderboard-table">
                 <thead>
                     <tr>
@@ -59,7 +60,33 @@
                     <!-- Dynamic Content -->
                 </tbody>
             </table>
+            <div class="reward-notice">
+                <span>🎁 Daily Rewards for Top 3!</span>
+                <p>Rewards arrive every 24h</p>
+            </div>
             <p id="leaderboard-refresh-note">Refreshes every 24h</p>
+        </div>
+    </div>
+
+    <div id="view-howto" class="view hidden">
+        <h2>How to Play</h2>
+        <div class="card howto-card">
+            <div class="howto-step">
+                <span class="step-num">1</span>
+                <p>Match 3 or more pieces to <strong>Upgrade</strong> them.</p>
+            </div>
+            <div class="howto-step">
+                <span class="step-num">2</span>
+                <p>Pieces upgrade from Pawn ♟ → Bishop ♝ → Knight ♞ → Rook ♜ → <strong>Queen ♛</strong>.</p>
+            </div>
+            <div class="howto-step">
+                <span class="step-num">3</span>
+                <p>Match <strong>Queens</strong> to harvest them and score!</p>
+            </div>
+            <div class="howto-step">
+                <span class="step-num">4</span>
+                <p>Earn <strong>Boosters</strong> from Daily Challenges to freeze time or blast pieces!</p>
+            </div>
         </div>
     </div>
 
@@ -80,9 +107,10 @@
     <div id="nav-bar">
         <button id="nav-play" class="nav-btn active" onclick="switchView('play')">Play</button>
         <button id="nav-daily" class="nav-btn" onclick="switchView('daily')">Daily</button>
-        <button id="nav-boosters" class="nav-btn" onclick="switchView('boosters')">Boosters</button>
+        <button id="nav-boosters" class="nav-btn" onclick="switchView('boosters')">Items</button>
         <button id="nav-leaderboard" class="nav-btn" onclick="switchView('leaderboard')">Ranks</button>
-        <button id="nav-profile" class="nav-btn" onclick="switchView('profile')">Profile</button>
+        <button id="nav-howto" class="nav-btn" onclick="switchView('howto')">Help</button>
+        <button id="nav-profile" class="nav-btn" onclick="switchView('profile')">User</button>
     </div>
 
     <script src="Queen.js"></script>
