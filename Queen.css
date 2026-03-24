@@ -103,6 +103,8 @@ h1 {
 
 .tile {
     position: absolute;
+    background: transparent;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -114,71 +116,51 @@ h1 {
     cursor: grab;
     user-select: none;
     
-    border: 2px solid rgba(255,255,255,0.4);
-    
     transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2), 
                 left 0.3s ease-out, 
                 opacity 0.2s, 
                 transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                filter 0.2s;
+                background 0.2s;
     z-index: 10;
 }
 
 .tile:hover {
-    filter: brightness(1.15);
+    background: rgba(255, 255, 255, 0.9);
 }
 
 .tile:active {
     cursor: grabbing;
+    background: #fff;
     z-index: 20;
-    transform: scale(1.1) translateY(-4px); 
-    filter: brightness(1.25);
+    transform: scale(1.1); 
+    box-shadow: 0 10px 15px rgba(0,0,0,0.15);
 }
 
-/* THICK CANDY STYLE PIECES */
+/* THICK FONT PIECES */
 .piece-pawn { 
-    background: radial-gradient(circle at 30% 30%, #86efac 0%, #22c55e 50%, #16a34a 100%);
-    box-shadow: inset -4px -4px 6px rgba(0,0,0,0.2), inset 4px 4px 6px rgba(255,255,255,0.6), 0 5px 0 #15803d, 0 8px 8px rgba(0,0,0,0.3);
-    color: #fff;
-    -webkit-text-stroke: 1px #16a34a;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-    border-radius: 50%; 
+    color: #4ade80; 
+    -webkit-text-stroke: 3px #4ade80; 
+    text-shadow: 0 1px 0 #16a34a, 0 2px 0 #16a34a, 0 3px 0 #16a34a, 0 4px 0 #16a34a, 0 5px 0 #16a34a, 0 8px 10px rgba(0,0,0,0.3); 
 }
-
 .piece-knight { 
-    background: radial-gradient(circle at 30% 30%, #fecdd3 0%, #f43f5e 50%, #e11d48 100%);
-    box-shadow: inset -4px -4px 6px rgba(0,0,0,0.2), inset 4px 4px 6px rgba(255,255,255,0.6), 0 5px 0 #be185d, 0 8px 8px rgba(0,0,0,0.3);
-    color: #fff;
-    -webkit-text-stroke: 1px #e11d48;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-    border-radius: 20px 0 20px 0; 
+    color: #fb7185; 
+    -webkit-text-stroke: 3px #fb7185; 
+    text-shadow: 0 1px 0 #e11d48, 0 2px 0 #e11d48, 0 3px 0 #e11d48, 0 4px 0 #e11d48, 0 5px 0 #e11d48, 0 8px 10px rgba(0,0,0,0.3); 
 }
-
 .piece-bishop { 
-    background: radial-gradient(circle at 30% 30%, #fef08a 0%, #facc15 50%, #ca8a04 100%);
-    box-shadow: inset -4px -4px 6px rgba(0,0,0,0.2), inset 4px 4px 6px rgba(255,255,255,0.6), 0 5px 0 #a16207, 0 8px 8px rgba(0,0,0,0.3);
-    color: #fff;
-    -webkit-text-stroke: 1px #ca8a04;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-    border-radius: 12px; 
+    color: #facc15; 
+    -webkit-text-stroke: 3px #facc15; 
+    text-shadow: 0 1px 0 #ca8a04, 0 2px 0 #ca8a04, 0 3px 0 #ca8a04, 0 4px 0 #ca8a04, 0 5px 0 #ca8a04, 0 8px 10px rgba(0,0,0,0.3); 
 }
-
 .piece-rook { 
-    background: radial-gradient(circle at 30% 30%, #7dd3fc 0%, #0ea5e9 50%, #0284c7 100%);
-    box-shadow: inset -4px -4px 6px rgba(0,0,0,0.2), inset 4px 4px 6px rgba(255,255,255,0.6), 0 5px 0 #0369a1, 0 8px 8px rgba(0,0,0,0.3);
-    color: #fff;
-    -webkit-text-stroke: 1px #0284c7;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-    border-radius: 6px; 
+    color: #38bdf8; 
+    -webkit-text-stroke: 3px #38bdf8; 
+    text-shadow: 0 1px 0 #0284c7, 0 2px 0 #0284c7, 0 3px 0 #0284c7, 0 4px 0 #0284c7, 0 5px 0 #0284c7, 0 8px 10px rgba(0,0,0,0.3); 
 }
-
 .piece-queen { 
-    background: radial-gradient(circle at 30% 30%, #e9d5ff 0%, #a855f7 50%, #9333ea 100%);
-    box-shadow: inset -4px -4px 6px rgba(0,0,0,0.2), inset 4px 4px 6px rgba(255,255,255,0.6), 0 5px 0 #7e22ce, 0 8px 8px rgba(0,0,0,0.3);
-    color: #fff;
-    -webkit-text-stroke: 1px #9333ea;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.8);
-    border-radius: 50%; 
+    color: #c084fc; 
+    -webkit-text-stroke: 3px #c084fc; 
+    text-shadow: 0 1px 0 #9333ea, 0 2px 0 #9333ea, 0 3px 0 #9333ea, 0 4px 0 #9333ea, 0 5px 0 #9333ea, 0 8px 10px rgba(0,0,0,0.3); 
 }
 
 @keyframes freeze-shake {
@@ -446,7 +428,7 @@ h2 {
         margin: auto auto; 
     }
     
-    .tile { font-size: 1.8rem; width: calc(var(--tile-sz) - 6px) !important; height: calc(var(--tile-sz) - 6px) !important; margin: 3px; } 
+    .tile { font-size: 1.8rem; border-radius: 8px; width: calc(var(--tile-sz) - 6px) !important; height: calc(var(--tile-sz) - 6px) !important; margin: 3px; } 
     
     .queen-fly {
         font-size: 3.5rem;
